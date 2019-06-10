@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="linux,">
 
 
 
@@ -79,13 +79,18 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Alvin Blog">
-<meta property="og:url" content="https://mm23504570.github.io/index.html">
+<meta name="description" content="中断是指操作系统响应硬件请求的一种机制，它会打断正常的进程正常的调度，然后调用内核中的中断处理程序来处理中断。 中断是一种异步的事件处理机制，可以提高系统的并发性。 由于会打断程序的执行，所以说中断处理程序就需要尽量的快。中断处理程序在响应中断的时候，会临时停止别的中断。 比如说正在处理中断，由于处理的时间太长，别的中断经过几次重试后仍无法得到响应，就会丢失。  怎么解决呢中断时间长和丢失的问题呢">
+<meta name="keywords" content="linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux软中断">
+<meta property="og:url" content="https://mm23504570.github.io/2019/06/10/linux软中断/index.html">
 <meta property="og:site_name" content="Alvin Blog">
+<meta property="og:description" content="中断是指操作系统响应硬件请求的一种机制，它会打断正常的进程正常的调度，然后调用内核中的中断处理程序来处理中断。 中断是一种异步的事件处理机制，可以提高系统的并发性。 由于会打断程序的执行，所以说中断处理程序就需要尽量的快。中断处理程序在响应中断的时候，会临时停止别的中断。 比如说正在处理中断，由于处理的时间太长，别的中断经过几次重试后仍无法得到响应，就会丢失。  怎么解决呢中断时间长和丢失的问题呢">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-06-10T15:39:39.780Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Alvin Blog">
+<meta name="twitter:title" content="linux软中断">
+<meta name="twitter:description" content="中断是指操作系统响应硬件请求的一种机制，它会打断正常的进程正常的调度，然后调用内核中的中断处理程序来处理中断。 中断是一种异步的事件处理机制，可以提高系统的并发性。 由于会打断程序的执行，所以说中断处理程序就需要尽量的快。中断处理程序在响应中断的时候，会临时停止别的中断。 比如说正在处理中断，由于处理的时间太长，别的中断经过几次重试后仍无法得到响应，就会丢失。  怎么解决呢中断时间长和丢失的问题呢">
 
 
 
@@ -115,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://mm23504570.github.io/">
+  <link rel="canonical" href="https://mm23504570.github.io/2019/06/10/linux软中断/">
 
 
 
 
 
-  <title>Alvin Blog</title>
+  <title>linux软中断 | Alvin Blog</title>
   
 
 
@@ -140,8 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -214,9 +218,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -246,9 +250,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/06/10/linux软中断/" itemprop="url">linux软中断</a></h1>
+          <h1 class="post-title" itemprop="name headline">linux软中断</h1>
         
 
         <div class="post-meta">
@@ -298,9 +300,7 @@
       
 
       
-        
-          
-            <p>中断是指操作系统响应硬件请求的一种机制，它会打断正常的进程正常的调度，然后调用内核中的中断处理程序来处理中断。 中断是一种异步的事件处理机制，可以提高系统的并发性。 由于会打断程序的执行，所以说中断处理程序就需要尽量的快。<br>中断处理程序在响应中断的时候，会临时停止别的中断。 比如说正在处理中断，由于处理的时间太长，别的中断经过几次重试后仍无法得到响应，就会丢失。 </p>
+        <p>中断是指操作系统响应硬件请求的一种机制，它会打断正常的进程正常的调度，然后调用内核中的中断处理程序来处理中断。 中断是一种异步的事件处理机制，可以提高系统的并发性。 由于会打断程序的执行，所以说中断处理程序就需要尽量的快。<br>中断处理程序在响应中断的时候，会临时停止别的中断。 比如说正在处理中断，由于处理的时间太长，别的中断经过几次重试后仍无法得到响应，就会丢失。 </p>
 <p>怎么解决呢中断时间长和丢失的问题呢？</p>
 <p>操作系统的中断将中断的处理分为上半部分和下半部分，分为硬中断和软中断。</p>
 <ul>
@@ -311,8 +311,6 @@
 <p>比如 网卡接收到数据后，会通过硬中断的方式，通知内核有新数据到了。内核就调用中断处理程序处理他。<br>对于上半部分来讲，既然是快速处理，其实就是把网卡的数据读到内存中，然后更新一下硬件寄存器的状态，说数据已经准备好了。然后发一个软中断信号，下半部分的内核线程被中断信号唤醒，然后从内存中找到对应的数据，再按照协议栈，对数据逐层解析，再发给应用。</p>
 <h3 id="如何查看中断"><a href="#如何查看中断" class="headerlink" title="如何查看中断"></a>如何查看中断</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/softirqs</span><br><span class="line">                    CPU0       CPU1       CPU2       CPU3</span><br><span class="line">          HI:          0          0          2          0</span><br><span class="line">       TIMER: 4148312434   13186832 2152909954 1619295093</span><br><span class="line">      NET_TX:         48        998         82         73</span><br><span class="line">      NET_RX:  679305939 2988243337 2907185894 1594980256</span><br><span class="line">       BLOCK:          0          0          0          0</span><br><span class="line">BLOCK_IOPOLL:          0          0          0          0</span><br><span class="line">     TASKLET:          4        327         19          3</span><br><span class="line">       SCHED: 2411399386 3393674518 2493384905 1990859404</span><br><span class="line">     HRTIMER:          0          0          0          0</span><br><span class="line">         RCU: 2964179126 2612143597 2807559860 2579168736</span><br><span class="line">         </span><br><span class="line">cat /proc/interrupts</span><br><span class="line">           CPU0       CPU1       CPU2       CPU3</span><br><span class="line">  0:         66          0          0          0   IO-APIC-edge      timer</span><br><span class="line">  1:         10          0          0          0   IO-APIC-edge      i8042</span><br><span class="line">  4:        308          0          0          0   IO-APIC-edge      serial</span><br><span class="line">  6:          3          0          0          0   IO-APIC-edge      floppy</span><br><span class="line">  8:          0          0          0          0   IO-APIC-edge      rtc0</span><br><span class="line">  9:          0          0          0          0   IO-APIC-fasteoi   acpi</span><br><span class="line"> 11:          0          0          0          0   IO-APIC-fasteoi   uhci_hcd:usb1, virtio3</span><br><span class="line"> 12:         15          0          0          0   IO-APIC-edge      i8042</span><br><span class="line"> 14:          0          0          0          0   IO-APIC-edge      ata_piix</span><br><span class="line"> 15:          0          0          0          0   IO-APIC-edge      ata_piix</span><br><span class="line"> 24:          0          0          0          0   PCI-MSI-edge      virtio1-config</span><br><span class="line"> 25:  147682968          0          0          0   PCI-MSI-edge      virtio1-req.0</span><br><span class="line"> 26:          0          0          0          0   PCI-MSI-edge      virtio0-config</span><br><span class="line"> 27:  542900481          0          0          0   PCI-MSI-edge      virtio0-input.0</span><br><span class="line"> 28:      14429          0          0          0   PCI-MSI-edge      virtio0-output.0</span><br><span class="line"> 29:          1  629325029          0          0   PCI-MSI-edge      virtio0-input.1</span><br><span class="line"> 30:          1    1503283          0          0   PCI-MSI-edge      virtio0-output.1</span><br><span class="line"> 31:          1          0 2068524220          0   PCI-MSI-edge      virtio0-input.2</span><br><span class="line"> 32:          1          0     345851          0   PCI-MSI-edge      virtio0-output.2</span><br><span class="line"> 33:          1          0          0 1462076132   PCI-MSI-edge      virtio0-input.3</span><br><span class="line"> 34:          1          0          0      26430   PCI-MSI-edge      virtio0-output.3</span><br><span class="line"> 35:          0          0          0          0   PCI-MSI-edge      virtio2-config</span><br><span class="line"> 36:   31425472          0          0          0   PCI-MSI-edge      virtio2-req.0</span><br><span class="line">NMI:          0          0          0          0   Non-maskable interrupts</span><br><span class="line">LOC:  382083826  252345119 1860499022  948502231   Local timer interrupts</span><br><span class="line">SPU:          0          0          0          0   Spurious interrupts</span><br><span class="line">PMI:          0          0          0          0   Performance monitoring interrupts</span><br><span class="line">IWI:  317647455  304012392  287285894  266483309   IRQ work interrupts</span><br><span class="line">RTR:          0          0          0          0   APIC ICR read retries</span><br><span class="line">RES: 1381296847  379530962 1012267283  998082928   Rescheduling interrupts</span><br><span class="line">CAL:    3200050   53044096   49394276   47287849   Function call interrupts</span><br><span class="line">TLB:   36023588   39893743   36694448   36256223   TLB shootdowns</span><br><span class="line">TRM:          0          0          0          0   Thermal event interrupts</span><br><span class="line">THR:          0          0          0          0   Threshold APIC interrupts</span><br><span class="line">DFR:          0          0          0          0   Deferred Error APIC interrupts</span><br><span class="line">MCE:          0          0          0          0   Machine check exceptions</span><br><span class="line">MCP:     179217     179217     179217     179217   Machine check polls</span><br><span class="line">ERR:          0</span><br><span class="line">MIS:          0</span><br><span class="line">PIN:          0          0          0          0   Posted-interrupt notification event</span><br><span class="line">PIW:          0          0          0          0   Posted-interrupt wakeup event</span><br></pre></td></tr></table></figure>
 <h3 id="软中断进程"><a href="#软中断进程" class="headerlink" title="软中断进程"></a>软中断进程</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ps aux | grep softirq</span><br><span class="line">root         3  0.0  0.0      0     0 ?        S     2017   6:26 [ksoftirqd/0]</span><br><span class="line">root        13  0.0  0.0      0     0 ?        S     2017 878:54 [ksoftirqd/1]</span><br><span class="line">root        18  0.0  0.0      0     0 ?        S     2017 268:38 [ksoftirqd/2]</span><br><span class="line">root        23  0.0  0.0      0     0 ?        S     2017  12:35 [ksoftirqd/3]</span><br></pre></td></tr></table></figure>
-          
-        
       
     </div>
     
@@ -327,318 +325,36 @@
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://mm23504570.github.io/2019/06/06/linux性能优化实战-CPU/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Alvin Tian">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Alvin Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/06/06/linux性能优化实战-CPU/" itemprop="url">linux性能优化实战-CPU</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-06T17:13:20+08:00">
-                2019-06-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-
+            <a href="/tags/linux/" rel="tag"># linux</a>
           
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="负载"><a href="#负载" class="headerlink" title="负载"></a>负载</h1><p>当我们发现系统很慢的时候，通过会查看系统的负载。 一般来讲会通过 top或这是 uptime命令</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"> top</span><br><span class="line">top - 17:15:48 up 622 days,  4:51,  9 users,  load average: 5.01, 5.02, 5.05</span><br><span class="line">Tasks: 210 total,   1 running, 205 sleeping,   1 stopped,   3 zombie</span><br><span class="line"><span class="meta">%</span>Cpu(s):  0.3 us,  0.3 sy,  0.0 ni, 98.7 id,  0.8 wa,  0.0 hi,  0.0 si,  0.0 st</span><br><span class="line">KiB Mem :  8010528 total,   179432 free,  4879284 used,  2951812 buff/cache</span><br><span class="line">KiB Swap:        0 total,        0 free,        0 used.  2776264 avail Mem</span><br><span class="line"></span><br><span class="line">  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND</span><br><span class="line">22239 root      20   0 5652808 140536   4732 S   0.7  1.8  18:21.59 java</span><br><span class="line"> 6731 root      20   0 5657940 123540   3640 S   0.3  1.5 112:09.73 java</span><br><span class="line">10219 redis     20   0  474672 336468    384 S   0.3  4.2 315:43.34 redis-server</span><br><span class="line">10274 root      20   0  571320  15488   2484 S   0.3  0.2  14:07.64 YDService</span><br><span class="line">24606 root      20   0       0      0      0 S   0.3  0.0   0:00.54 kworker/0:0</span><br><span class="line"></span><br><span class="line">uptime</span><br><span class="line"> 17:16:22 up 622 days,  4:51,  9 users,  load average: 5.05, 5.04, 5.05</span><br></pre></td></tr></table></figure>
-<p>上边的load average: 5.05, 5.04, 5.05 就是系统的平均负载了。 分别代表过去1分钟，5分钟，15分钟的平均负载。 这给我们提供了分析系统负载趋势的数据源。<br>可以观察 过去15分钟内的负载的变化</p>
-<p>那什么是平均负载呢？<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">man uptime</span><br><span class="line">System load averages is the average number of processes that are either in a runnable or uninterruptable state.  A process in a runnable state is either using the CPU or waiting  to  use the CPU.   </span><br><span class="line">A process in uninterruptable state is waiting for some I/O access, eg waiting for disk.  The averages are taken over the three time intervals.  Load averages are not normalized for the number of CPUs in a system, so a load average of 1 means a single CPU system is loaded all the time while on a 4 CPU system it means it was idle 75% of the time.</span><br></pre></td></tr></table></figure></p>
-<p>平均负载就是单位时间里，进程状态为runnable(状态为R Running or Runnable)或者是uninterruptable(状态为D Disk sleep)的进程数。<br>不可中断是操作系统对于硬件的一种保护措施，是内核态执行的。</p>
-<p>如果你有4个CPU，如果负载是4 那就说明CPU全部被占满了，资源得到了最大的利用。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">查看cpu数</span><br><span class="line">grep 'model name' /proc/cpuinfo | wc -l</span><br><span class="line">2</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>当平均负载在70%CPU数量的时候比较合适</p>
-</blockquote>
-<p>负载高不代表CPU的使用率高。</p>
-<ul>
-<li>CPU密集型的程序，负载应该和CPU数一致</li>
-<li>IO密集型的进程，IO负载会高，CPU使用率不一定会高</li>
-<li>大量等待CPU调度的进程也会造成load变高，CPU也会随之升高</li>
-</ul>
-<p>apt install systat</p>
-<p>常用的一些命令包括 top, mpstat, pidstat, uptime</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">mpstat -P  ALL 1 -u</span><br><span class="line">Linux 3.10.0-514.26.2.el7.x86_64 (tx-relay1.common.bj.tx.lan) 	2019年06月06日 	_x86_64_	(4 CPU)</span><br><span class="line"></span><br><span class="line">18时08分38秒  CPU    %usr   %nice    %sys %iowait    %irq   %soft  %steal  %guest  %gnice   %idle</span><br><span class="line">18时08分39秒  all   42.86    0.00   21.94    0.26    0.00    0.26    0.00    0.00    0.00   34.69</span><br><span class="line">18时08分39秒    0   38.14    0.00   21.65    0.00    0.00    0.00    0.00    0.00    0.00   40.21</span><br><span class="line">18时08分39秒    1   37.37    0.00   21.21    0.00    0.00    1.01    0.00    0.00    0.00   40.40</span><br><span class="line">18时08分39秒    2   47.96    0.00   20.41    0.00    0.00    0.00    0.00    0.00    0.00   31.63</span><br><span class="line">18时08分39秒    3   47.47    0.00   24.24    2.02    0.00    0.00    0.00    0.00    0.00   26.26</span><br><span class="line"></span><br><span class="line">pidstat -u -p  25397</span><br><span class="line">Linux 3.10.0-514.26.2.el7.x86_64 (tx-relay1.common.bj.tx.lan) 	2019年06月06日 	_x86_64_	(4 CPU)</span><br><span class="line"></span><br><span class="line">18时14分24秒   UID       PID    %usr %system  %guest    %CPU   CPU  Command</span><br><span class="line">18时14分24秒  1038     25397    0.00    0.00    0.00    0.00     2  python</span><br></pre></td></tr></table></figure>
-<h1 id="CPU上下文切换"><a href="#CPU上下文切换" class="headerlink" title="CPU上下文切换"></a>CPU上下文切换</h1><h1 id="短时进程"><a href="#短时进程" class="headerlink" title="短时进程"></a>短时进程</h1><h1 id="大量不可中断进程"><a href="#大量不可中断进程" class="headerlink" title="大量不可中断进程"></a>大量不可中断进程</h1><h1 id="大量僵尸进程"><a href="#大量僵尸进程" class="headerlink" title="大量僵尸进程"></a>大量僵尸进程</h1><h1 id="linux软中断"><a href="#linux软中断" class="headerlink" title="linux软中断"></a>linux软中断</h1><p>中断是指操作系统响应硬件请求的一种机制，它会打断正常的进程正常的调度，然后调用内核中的中断处理程序来处理中断。 中断是一种异步的事件处理机制，可以提高系统的并发性</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
       
 
       
       
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
       
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://mm23504570.github.io/2019/06/06/SRE-方法论/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Alvin Tian">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Alvin Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/06/06/SRE-方法论/" itemprop="url">SRE-方法论</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-06T16:47:08+08:00">
-                2019-06-06
-              </time>
+              <a href="/2019/06/06/linux性能优化实战-CPU/" rel="next" title="linux性能优化实战-CPU">
+                <i class="fa fa-chevron-left"></i> linux性能优化实战-CPU
+              </a>
             
+          </div>
 
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
             
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <p>SRE是指Site Reliability Engineer (网站可靠性工程师)。他是软件工程师和系统管理员的结合，一个SRE工程师基本上需要掌握很多知识：算法，数据结构，编程能力，网络编程，分布式系统，可扩展架构，故障排除。</p>
-<p>SRE成员的特点：</p>
-<ul>
-<li>对重复性、手工性的操作有天然的排斥感</li>
-<li>有足够的技术能力快速开发软件以代替手工操作</li>
-</ul>
-<p>SRE通过设计、构建自动化的工具来取代人工操作。 通过操作代码来管理机器，而不是人直接去管理机器。</p>
-<h1 id="确保长期关注研发工作"><a href="#确保长期关注研发工作" class="headerlink" title="确保长期关注研发工作"></a>确保长期关注研发工作</h1><p>限制运维工作在50%以内。 以保证大部分时间都在研发工作上.<br>how？</p>
-<ol>
-<li>处理问题一天不要超过2个紧急事件。运维人员需要跟进每一个问题，把问题的原委搞清楚才能得到成长和改进。</li>
-<li>尽量将问题转给研发团队。</li>
-<li>轮班on-call，把时间分配开</li>
-<li>少做手动操作，把手动操作自动化以节省时间</li>
-</ol>
-<h1 id="在保证服务SLO的前提下最大化迭代速度。"><a href="#在保证服务SLO的前提下最大化迭代速度。" class="headerlink" title="在保证服务SLO的前提下最大化迭代速度。"></a>在保证服务SLO的前提下最大化迭代速度。</h1><p>最主要的矛盾是迭代创新的速度与产品稳定程度之间的矛盾。<br>在SRE模型中，我们正面对这些矛盾，使用的工具是<code>错误预算</code>。</p>
-<p>首先，任何产品都不可能保证100%的可靠信，所以我们需要根据实际情况，设置一个我们可以实现并且用户可以接受的可靠性的指标。<br>比如我们的用户的可以接受的可靠性是99%，那错误预算就是1%，我们可以使用错误预算最大化的保证新功能的上线速度，用于做一些创新和正常的业务需求.</p>
-<p>可靠性的目标可以考虑以下几个方面:</p>
-<ul>
-<li>服务的可靠性达到多少用户才会满意呢？</li>
-<li>用户是否有其他的替代方案</li>
-<li>是否会影响用户的使用模式</li>
-</ul>
-<h1 id="监控系统"><a href="#监控系统" class="headerlink" title="监控系统"></a>监控系统</h1><p>监控系统可以衡量一个系统的可用性和质量的重要手段。 简单来说就是收集各层的性能或者是业务指标，然后加以聚合和汇总，呈现出动态的视图。可以针对这些指标设置阈值和规则，进行各种各样的报警。 如Email、短信等。<br>但是这样的报警策略并不是很有效的需要人去处理，人需要阅读错误信息，再去排查问题，这本身就是错误的。理想状态下，监控系统应该能自己分析报警信息，然后自动决策， 或者是给出合理的建议，让人去选择。</p>
-<h1 id="应急事件处理"><a href="#应急事件处理" class="headerlink" title="应急事件处理"></a>应急事件处理</h1><p>MTTF(平均失败时间)和MTTR(平均恢复时间)，是评价一个团队将系统恢复到正常的最有效的指标。<br>出现故障后，如果能通过自动故障处理的程序把系统恢复那再好不过了。不过有好些情况还是需要人工干预的。 通过事先预案并且将最佳方法记录在”运维手册“中，这样可以有效的降低MTTR.<br>学过武功秘籍的人去解决问题，自然会快一些和高效一些. 而且随着时间的推移，运维手册会不断的完善。也方便对新人做培训</p>
-<h1 id="变更管理"><a href="#变更管理" class="headerlink" title="变更管理"></a>变更管理</h1><p>经验来讲，70%的生产事故来源于变更。变更管理的最佳事件使用自动化来完成以下项目：</p>
-<ul>
-<li>渐进式发布机制。 - 减少受影响面积</li>
-<li>迅速而准确的检测到问题的发生。 - 减少故障时间</li>
-<li>出现问题时可以自动的快速回滚。  - 减少故障时间</li>
-</ul>
-<h1 id="需求预测和容量规划"><a href="#需求预测和容量规划" class="headerlink" title="需求预测和容量规划"></a>需求预测和容量规划</h1><p>保障业务有足够的容量和冗余度来服务预测中的外来的需求。</p>
-<p>容量规划必须有几个必要的步骤:</p>
-<ul>
-<li>必须有一个准确的自然增长需求预测模型，需求预测的时间应该超过资源获取的时间。</li>
-<li>规划中必须有准确的非自然增长的需求来源的统计</li>
-<li>必须有周期性压力测试，以便准确地将系统原始资源信息与业务容量对应起来。</li>
-</ul>
-<h1 id="资源部署"><a href="#资源部署" class="headerlink" title="资源部署"></a>资源部署</h1><p>SRE要负责资源的部署。 添加新的资源可以是机器、或者是集群，当然添加过后还需要改动对应的配置，如负载均衡等等，这些都会对整体的稳定性有些影响，不过这个k8s下目前还是比较简单的。 </p>
-<h1 id="效率与性能"><a href="#效率与性能" class="headerlink" title="效率与性能"></a>效率与性能</h1><p>一个是高效的利用资源的，提升利用率。这样可以更加节省成本。SRE需要提高资源的利用率。 一个业务总资源使用情况由以下几个因素：</p>
-<ul>
-<li>用户流量 </li>
-<li>可用容量 </li>
-<li>资源利用率</li>
-</ul>
-<p>SRE可以通过需求模型的预测和监控数据来优化资源的使用率。</p>
-<p>延迟在负载高的情况下会上升，当负载到达临界值的时候，系统会逐渐变慢，甚至全部停止。SRE可以通过设置预期的延迟目标和维护足够的容量解决这个问题。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -648,10 +364,11 @@
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -659,6 +376,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -679,8 +400,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -731,6 +461,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#如何查看中断"><span class="nav-number">1.</span> <span class="nav-text">如何查看中断</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#软中断进程"><span class="nav-number">2.</span> <span class="nav-text">软中断进程</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -864,6 +610,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
